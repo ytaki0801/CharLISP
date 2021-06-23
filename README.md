@@ -2,7 +2,7 @@
 
 ## Examples
 
-See comments of source codes for other examples.
+See comments in source codes for other examples.
 
 ```
 ('(Hello,World))
