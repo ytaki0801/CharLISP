@@ -159,6 +159,7 @@ node_t c_eval(node_t e, node_t a);
 #define C_ADD  (chr_to_node('+'))
 #define C_SUB  (chr_to_node('-'))
 #define C_MUL  (chr_to_node('*'))
+#define C_DIV  (chr_to_node('/'))
 #define C_MOD  (chr_to_node('%'))
 #define C_POW  (chr_to_node('^'))
 
@@ -201,8 +202,8 @@ node_t c_lookup(node_t t, node_t a)
 {
   if (t == NULL) return NULL;
   else if (n_nums(t)) return t;
-  else if (eq(t, C_ADD) || eq(t, C_SUB) || eq(t, C_MUL) || eq(t, C_MOD) ||
-           eq(t, C_POW) || eq(t, C_CONS))
+  else if (eq(t, C_ADD) || eq(t, C_SUB) || eq(t, C_MUL) || eq(t, C_DIV) ||
+           eq(t, C_MOD) || eq(t, C_POW) || eq(t, C_CONS))
     return t;
   else
     return c_assq(t, a);
@@ -217,6 +218,7 @@ node_t c_apply(node_t f, node_t v)
     if      (eq(f, C_ADD)) return num_to_node(a1 + a2);
     else if (eq(f, C_SUB)) return num_to_node(a1 - a2);
     else if (eq(f, C_MUL)) return num_to_node(a1 * a2);
+    else if (eq(f, C_DIV)) return num_to_node(a1 / a2);
     else if (eq(f, C_MOD)) return num_to_node(a1 % a2);
     else if (eq(f, C_POW)) {
       int r = 1; for (int n = 0; n < a2; n++, r *= a1);

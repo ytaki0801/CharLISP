@@ -15,6 +15,15 @@ See comments in source codes for other examples.
 => (1 2 (F i z z) 4 (B u z z) (F i z z) 7 8 (F i z z) (B u z z) 11 (F i z z) 13 14 (F i z z B u z z) 16 17 (F i z z) 19 (B u z z) (F i z z) 22 23 (F i z z) (B u z z) 26 (F i z z) 28 29 (F i z z B u z z))
 ```
 
+## Language specification overview with Scheme examples
+
+|CharLISP|Scheme||
+|---|---|---|
+|`($('a)('(bc)))`|`(cons (quote a) (quote (a b c)))`|`'` is just an abbreviation of quote, not a reader macro|
+|`(^(+(*(+24)(%52))2)(/62))`|`(expt (+ (* (+ 2 4) (modulo 5 2)) 2) (/ 6 2))`|one digit of intergers only in souce code|
+|`(?n01(f(-n1)r))`|`(if (eq? n 0) 1 (f (- n 1) r))`|equal-only condition syntax|
+|`((:ab(*a(-ba)))43)`|`((lambda (a b) (* a (- b a))) 4 3)`|supporting lexical scope, closure and tail-call optimization|
+
 ## License
 
 The codes in this repository are licensed under [CC0, Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
