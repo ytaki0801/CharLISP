@@ -1,4 +1,4 @@
-# CharLISP
+# CharLISP: One Character / One Token Interpreters
 
 ## Examples
 
