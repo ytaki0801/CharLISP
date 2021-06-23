@@ -2,7 +2,7 @@
 
 ## Purpose of this project
 
-* To develop a language specification to study implementation of minimum interpreter, available to write in various programming languages, by using S-expression and one character tokens to avoid lexer/parser complex
+* To develop a language specification to study implementation of minimum interpreter, available to be written in various programming languages, by using S-expression and one character tokens to avoid lexer/parser complex
 
 ## Examples
 
