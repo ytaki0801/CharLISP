@@ -18,9 +18,9 @@ See comments in source codes for other examples.
 ## Language specification overview with Scheme examples
 
 |CharLISP|Scheme||
-|---|---|---|
+|---------|------------------|---|
 |`($('a)('(bc)))`|`(cons (quote a) (quote (b c)))`|`'` is just an abbreviation of quote, not a reader macro|
-|`(*(+24)2)`|`(* (+ 2 4) 2)`|one digit of intergers only in souce code|
+|`(^(*(+24)2)4)`|`(expt (* (+ 2 4) 2) 4)`|one digit of intergers only in souce code|
 |`((:x(?x1('Y)('N)))3)`|`((lambda (x) (if (eq? x 1) 'Y 'N)) 3)`|equal-only condition syntax|
 * Lambda expression is supporting multiple local variables, lexical scope, closure and tail call optimization, with no global environment.
 
