@@ -1,4 +1,8 @@
-# CharLISP: One Character / One Token Interpreters
+# CharLISP: One Character / One Token Language
+
+## Purpose of this project
+
+* To study implementation of minimum interpreter written in various programming languages, by using S-expression and one character tokens to avoid lexer/parser complex
 
 ## Examples
 
