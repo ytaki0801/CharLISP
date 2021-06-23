@@ -1,6 +1,6 @@
-# CharLISP: small LISP interpreters with one-token-per-character
+# CharLISP
 
-# Examples
+## Examples
 
 See comments of source codes for other examples.
 
@@ -15,6 +15,6 @@ See comments of source codes for other examples.
 => (1 2 (F i z z) 4 (B u z z) (F i z z) 7 8 (F i z z) (B u z z) 11 (F i z z) 13 14 (F i z z B u z z) 16 17 (F i z z) 19 (B u z z) (F i z z) 22 23 (F i z z) (B u z z) 26 (F i z z) 28 29 (F i z z B u z z))
 ```
 
-# License
+## License
 
 The codes in this repository are licensed under [CC0, Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
