@@ -20,9 +20,9 @@ See comments in source codes for other examples.
 |CharLISP|Scheme||
 |---|---|---|
 |`($('a)('(bc)))`|`(cons (quote a) (quote (a b c)))`|`'` is just an abbreviation of quote, not a reader macro|
-|`(^(*(+24)2)(/62))`|`(expt (* (+ 2 4) 2) (/ 6 2))`|one digit of intergers only in souce code|
+|`(*(+24)2)`|`(* (+ 2 4) 2)`|one digit of intergers only in souce code|
 |`(?n01(f(-n1)r))`|`(if (eq? n 0) 1 (f (- n 1) r))`|equal-only condition syntax|
-|`((:ab(%ba))42)`|`((lambda (a b) (modulo b a)) 4 2)`|supporting lexical scope and closure, no global environment|
+|`((:ab(^ba))42)`|`((lambda (a b) (expt b a)) 4 2)`|supporting lexical scope and closure, no global env|
 
 ## License
 
