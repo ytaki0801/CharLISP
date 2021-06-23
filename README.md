@@ -21,8 +21,8 @@ See comments in source codes for other examples.
 |---|---|---|
 |`($('a)('(bc)))`|`(cons (quote a) (quote (a b c)))`|`'` is just an abbreviation of quote, not a reader macro|
 |`(*(+24)2)`|`(* (+ 2 4) 2)`|one digit of intergers only in souce code|
-|`(?n01(f(-n1)r))`|`(if (eq? n 0) 1 (f (- n 1) r))`|equal-only condition syntax|
-|`((:ab(^ba))42)`|`((lambda (a b) (expt b a)) 4 2)`|supporting lexical scope and closure, no global env|
+|`((:x(?x1('Y)('N)))3)`|`((lambda (x) (if (eq? x 1) 'Y 'N)) 3)`|equal-only condition syntax|
+* lambda expression is supporting lexical scope, closure and tail call optimization, with no global environment.
 
 ## License
 
