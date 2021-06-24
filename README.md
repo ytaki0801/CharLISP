@@ -25,7 +25,7 @@ See comments in source codes for other examples.
 
 * Special forms
 
-|codes|Description|Equivalent in Scheme|
+|Codes|Description|Equivalent in Scheme|
 |:---:|:---|:---:|
 |`(:abcB)`|*lambda* syntax with lexical scope|`(lambda (a b c) B)`|
 |`(?ABYZ)`|*if* syntax with equal-only condition|`(if (eq? A B) Y Z)`|
