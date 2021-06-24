@@ -31,7 +31,7 @@ See comments in source codes for other examples.
 |`(?ABYZ)`|if syntax with equal-only condition|`(if (eq? A B) Y Z)`|
 |`('A)`|quote syntax as an abbreviation|`(quote A)`|
 
-* Builtin functions: `+`, `-`, `*`, `/`, `%`(modulo), `^`(expt), `$`(cons)
+* Builtin functions: `+` `-` `*` `/` `%`(modulo) `^`(expt) `$`(cons)
 
 * Data types: one-character symbols and integers only, except default type of inter as return values
 
