@@ -35,7 +35,7 @@ See comments in source codes for other examples.
 
 |CharLISP|Scheme|
 |---|---|
-|`+``-``*``/`|`+``-``*``/`|
+|`+-*/`|`+-*/|
 |`%`|`modulo`|
 |`^`|`expt`|
 |`$`|`cons`|
