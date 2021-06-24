@@ -31,11 +31,9 @@ See comments in source codes for other examples.
 |`(?ABYZ)`|if syntax with equal-only condition|`(if (eq? A B) Y Z)`|
 |`('A)`|quote syntax as an abbreviation|`(quote A)`|
 
-* Builtin functions: * `+`, `-`, `*`, `/`, `%`(modulo), `^`(expt), `$`(cons)
+* Builtin functions: `+`, `-`, `*`, `/`, `%`(modulo), `^`(expt), `$`(cons)
 
-* Data types
-	* One-character symbols and integers only in codes
-	* Default type of integer as return values of integer
+* Data types: Only one-character symbols and integers, except default type of inter as return values
 
 ## License
 
