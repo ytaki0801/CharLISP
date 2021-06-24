@@ -25,13 +25,13 @@ See comments in source codes for other examples.
 
 * Special forms
 
-|CharLISP||Scheme correspondence|
-|---|---|---|
-|`(:abcB)`|lambda syntax with lexical scope|`(lambda (a b c) B)`|
-|`(?ABYZ)`|if syntax with equal-only condition|`(if (eq? A B) Y Z)`|
-|`('A)`|quote syntax as an abbreviation|`(quote A)`|
+|codes|Description|Equivalent in Scheme|
+|:---:|:---|:---:|
+|`(:abcB)`|*lambda* syntax with lexical scope|`(lambda (a b c) B)`|
+|`(?ABYZ)`|*if* syntax with equal-only condition|`(if (eq? A B) Y Z)`|
+|`('A)`|*quote* syntax as an abbreviation|`(quote A)`|
 
-* Builtin functions: `+` `-` `*` `/` `%`(modulo) `^`(expt) `$`(cons)
+* Builtin functions: `+` `-` `*` `/` `%`(`modulo`) `^`(`expt`) `$`(`cons`)
 
 * Data types: one-character symbols and integers only, except default type of integer as return values
 
