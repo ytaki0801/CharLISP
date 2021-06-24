@@ -42,7 +42,7 @@ See comments in source codes for other examples.
 
 * Data types
 	* One-character symbols and integers only in codes
-	* Default integer as return values of integer
+	* Default type of integer as return values of integer
 
 ## License
 
