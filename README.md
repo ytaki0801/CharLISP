@@ -2,7 +2,7 @@
 
 ## Purpose of this project
 
-* To develop a language specification to study implementation of minimum interpreter, by using S-expression and one character tokens to avoid lexer/parser complex
+* To develop a language specification for learning about implementation of minimum interpreter, by using S-expression and one character tokens to avoid lexer/parser complex
 * To study or enjoy implementation of Lambda expressions, available to be written in various programming languages, with lexical scope and closure more easily and properly
 
 ## Examples
