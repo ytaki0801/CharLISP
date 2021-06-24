@@ -88,13 +88,7 @@ node_t c_syn(const char *s, int *pos)
   *pos = *pos - 1;
   if (t == ')') {
     node_t r = NULL;
-    while (s[*pos] != '(') {
-      if (s[*pos] == '.') {
-        *pos = *pos - 1;
-        r = cons(c_syn(s, pos), car(r));
-      } else
-        r = cons(c_syn(s, pos), r);
-    }
+    while (s[*pos] != '(') r = cons(c_syn(s, pos), r);
     *pos = *pos - 1;
     return (r);
   } else {
