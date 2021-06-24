@@ -33,7 +33,7 @@ See comments in source codes for other examples.
 
 * Builtin functions: `+` `-` `*` `/` `%`(modulo) `^`(expt) `$`(cons)
 
-* Data types: one-character symbols and integers only, except default type of inter as return values
+* Data types: one-character symbols and integers only, except default type of integer as return values
 
 ## License
 
