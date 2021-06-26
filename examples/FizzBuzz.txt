@@ -1,0 +1,20 @@
+* For input
+
+(((:g(gg))(:g(:nr(?(=n0)r(?(=(%n(*35))0)((gg)(-n1)($('(FizzBuzz))r))(?(=(%n3)0)((gg)(-n1)($('(Fizz))r))(?(=(%n5)0)((gg)(-n1)($('(Buzz))r))((gg)(-n1)($nr)))))))))(*56)('()))
+
+* Equivalent in Scheme
+
+(((lambda (g) (g g))
+  (lambda (g)
+    (lambda (n r)
+      (if (= n 0)
+        r
+        (if (= (modulo n (* 3 5)) 0)
+            ((g g) (- n 1) (cons 'FizzBuzz r))
+            (if (= (modulo n 3) 0)
+                ((g g) (- n 1) (cons 'Fizz r))
+                (if (= (modulo n 5) 0)
+                    ((g g) (- n 1) (cons 'Buzz r))
+                    ((g g) (- n 1) (cons n r)))))))))
+ (* 5 6) '())
+

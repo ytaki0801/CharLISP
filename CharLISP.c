@@ -88,7 +88,13 @@ node_t c_syn(const char *s, int *pos)
   *pos = *pos - 1;
   if (t == ')') {
     node_t r = NULL;
-    while (s[*pos] != '(') r = cons(c_syn(s, pos), r);
+    while (s[*pos] != '(') {
+      if (s[*pos] == '.') {
+        *pos = *pos - 1;
+	r = cons(c_syn(s, pos), car(r));
+      } else
+        r = cons(c_syn(s, pos), r);
+    }
     *pos = *pos - 1;
     return (r);
   } else {
@@ -149,14 +155,6 @@ void c_string(node_t s)
 
 node_t c_eval(node_t e, node_t a);
 
-#define C_CONS (chr_to_node('$'))
-#define C_ADD  (chr_to_node('+'))
-#define C_SUB  (chr_to_node('-'))
-#define C_MUL  (chr_to_node('*'))
-#define C_DIV  (chr_to_node('/'))
-#define C_MOD  (chr_to_node('%'))
-#define C_POW  (chr_to_node('^'))
-
 node_t caar(node_t x) { return car(car(x)); }
 node_t cadr(node_t x) { return car(cdr(x)); }
 node_t cdar(node_t x) { return cdr(car(x)); }
@@ -192,12 +190,23 @@ node_t c_reverse(node_t x)
   else return c_append(c_reverse(cdr(x)), cons(car(x), NULL));
 }
 
+#define C_ADD (chr_to_node('+'))
+#define C_SUB (chr_to_node('-'))
+#define C_MUL (chr_to_node('*'))
+#define C_MOD (chr_to_node('%'))
+#define C_EQL (chr_to_node('='))
+#define C_LTN (chr_to_node('<'))
+#define C_CON (chr_to_node('$'))
+#define C_CAR (chr_to_node('['))
+#define C_CDR (chr_to_node(']'))
+
 node_t c_lookup(node_t t, node_t a)
 {
   if (t == NULL) return NULL;
   else if (n_nums(t)) return t;
-  else if (eq(t, C_ADD) || eq(t, C_SUB) || eq(t, C_MUL) || eq(t, C_DIV) ||
-           eq(t, C_MOD) || eq(t, C_POW) || eq(t, C_CONS))
+  else if (eq(t, C_ADD) || eq(t, C_SUB) || eq(t, C_MUL) || eq(t, C_MOD) ||
+           eq(t, C_EQL) || eq(t, C_LTN) ||
+	   eq(t, C_CON) || eq(t, C_CAR) || eq(t, C_CDR))
     return t;
   else
     return c_assq(t, a);
@@ -205,19 +214,19 @@ node_t c_lookup(node_t t, node_t a)
 
 node_t c_apply(node_t f, node_t v)
 {
-  if (eq(f, C_CONS)) return cons(car(v), cadr(v));
-  else if (n_nums(car(v))) {
+  if      (eq(f, C_CON)) return cons(car(v), cadr(v));
+  else if (eq(f, C_CAR)) return car(car(v));
+  else if (eq(f, C_CDR)) return cdr(car(v));
+  else if (eq(f, C_EQL)) return num_to_node(eq(car(v), cadr(v)));
+  else if (n_nums(car(v)) && n_nums(cadr(v))) {
     int a1 = (node_to_num(car(v)));
     int a2 = (node_to_num(cadr(v)));
     if      (eq(f, C_ADD)) return num_to_node(a1 + a2);
     else if (eq(f, C_SUB)) return num_to_node(a1 - a2);
     else if (eq(f, C_MUL)) return num_to_node(a1 * a2);
-    else if (eq(f, C_DIV)) return num_to_node(a1 / a2);
     else if (eq(f, C_MOD)) return num_to_node(a1 % a2);
-    else if (eq(f, C_POW)) {
-      int r = 1; for (int n = 0; n < a2; n++, r *= a1);
-      return num_to_node(r);
-    } else return NULL;
+    else if (eq(f, C_LTN)) return num_to_node(a1 < a2);
+    else return NULL;
   } else return NULL;
 }
  
@@ -239,10 +248,10 @@ node_t c_eval(node_t e, node_t a)
       node_t vals = cadr(e);
       return vals;
     } else if (eq(car(e), C_IF)) {
-      if (eq(c_eval(cadr(e), a), c_eval(caddr(e), a)))
-        return c_eval(cadddr(e), a);
+      if (node_to_num(c_eval(cadr(e), a)))
+        return c_eval(caddr(e), a);
       else
-        return c_eval(cadddr(cdr(e)), a);
+        return c_eval(cadddr(e), a);
     } else if (eq(car(e), C_LAMBDA)) {
       node_t r = c_reverse(cdr(e));
       node_t body = car(r);
@@ -291,12 +300,9 @@ int main(int argc, char *argv[])
 
 /*
 Examples:
-('(Hello!!))
-((:nr($nr))12)
-((:n(?(%n3)0('Y)('N)))6)
-(((:g(gg))(:g(:nr(?n0r((gg)(-n1)(*rn))))))51)
-(((:g(gg))(:g(:nr(?n(-01)r((gg)(-n1)($(((:g(gg))(:g(:nab(?n0a((gg)(-n1)b(+ab))))))n01)r))))))(*37)('()))
-(((:g(gg))(:g(:nr(?n1r(?(((:g(gg))(:g(:nx(?nx1(?(%nx)0(-01)((gg)n(+x1)))))))n2)1((gg)(-n1)($nr))((gg)(-n1)r))))))(^(*25)2)('()))
-(((:g(gg))(:g(:nr(?n0r(?(%n(*35))0((gg)(-n1)($('(FizzBuzz))r))(?(%n3)0((gg)(-n1)($('(Fizz))r))(?(%n5)0((gg)(-n1)($('(Buzz))r))((gg)(-n1)($nr)))))))))(*56)('()))
+('(Hello!!)) => (H e l l o ! !)
+((:nr($nr))12) => (1 . 2)
+((:n(?(=(%n3)0)('Y)('N)))6) => Y
+((:x($([(]x))($([x)(](]x)))))('(abc))) => (b a c)
 */
 

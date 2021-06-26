@@ -1,0 +1,16 @@
+* For input
+
+(((:g(gg))(:t(:abc(?(<ba)((tt)((tt)(-a1)bc)((tt)(-b1)ca)((tt)(-c1)ab))b))))(*27)70)
+
+* Equivalent in Scheme
+
+(((lambda (g) (g g))
+  (lambda (t)
+    (lambda (a b c)
+      (if (< b a)
+          ((t t) ((t t) (- a 1) b c)
+                 ((t t) (- b 1) c a)
+                 ((t t) (- c 1) a b))
+          b))))
+ (* 2 7) 7 0)
+

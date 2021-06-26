@@ -1,0 +1,14 @@
+* For input
+
+(((:g(gg))(:g(:nr(?(=n0)r((gg)(-n1)(*rn))))))51)
+
+* Equivalent in Scheme
+
+(((lambda (g) (g g))
+  (lambda (g)
+    (lambda (n r)
+      (if (= n 0)
+        r
+        ((g g) (- n 1) (* r n))))))
+ 5 1)
+

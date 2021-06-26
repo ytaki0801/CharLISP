@@ -1,0 +1,25 @@
+* For input
+
+(((:g(gg))(:g(:nr(?(=n1)r(?(=(((:g(gg))(:g(:nx(?(=nx)1(?(=(%nx)0)(-01)((gg)n(+x1)))))))n2)1)((gg)(-n1)($nr))((gg)(-n1)r))))))(*(*25)(*25))('()))
+
+* Equivalent in Scheme
+
+(((lambda (g) (g g))
+  (lambda (g)
+    (lambda (n r)
+      (if (= n 1)
+        r
+        (if (= (((lambda (g) (g g))
+                 (lambda (g)
+                 (lambda (n x)
+                   (if (= n x)
+                     1
+                     (if (= (modulo n x) 0)
+                         (- 0 1)
+                         ((g g) n (+ x 1)))))))
+                n 2)
+               1)
+            ((g g) (- n 1) (cons n r))
+            ((g g) (- n 1) r))))))
+ (* (* 2 5) (* 2 5)) '())
+

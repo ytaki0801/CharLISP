@@ -1,0 +1,23 @@
+* For input
+
+(((:g(gg))(:g(:nr(?(<n0)r((gg)(-n1)($(((:g(gg))(:g(:nab(?(=n0)a((gg)(-n1)b(+ab))))))n01)r))))))(*37)('()))
+
+* Equivalent in Scheme
+
+(((lambda (g) (g g))
+  (lambda (g)
+    (lambda (n r)
+      (if (< n 0)
+          r
+          ((g g) (- n 1)
+                 (cons
+                  (((lambda (g) (g g))
+                    (lambda (g)
+                      (lambda (n a b)
+                        (if (= n 0)
+                           a
+                           ((g g) (- n 1) b (+ a b))))))
+                   n 0 1)
+                  r))))))
+ (* 3 7) '())
+
