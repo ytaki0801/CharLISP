@@ -1,0 +1,82 @@
+%
+% CharLISP.swi: SWI-Prolog version of CharLISP
+%
+% This code is Licensed under CC0.
+% https://creativecommons.org/publicdomain/zero/1.0/
+%
+
+% S-expression syntax analysis: c_read
+:- set_prolog_flag(double_quotes, chars).
+c_syn1(['('|S], R, [R|S]) :- !.
+c_syn1(['.'|S], [R1|_], L)  :- c_syn(S, [A|D]), c_syn1(D, [A|R1], L), !.
+c_syn1(S, R, L)  :- c_syn(S, [A|D]), c_syn1(D, [A|R], L).
+c_syn([')'|S], L) :- c_syn1(S, [], L), !.
+c_syn(S, S).
+c_read(S, R) :- reverse(S, L), c_syn(L, [R|_]).
+
+% S-expression output: c_display
+c_strcons([S|[]]) :- c_display(S).
+c_strcons([S|SD]) :- (number(SD) ; atom(SD)),
+                     c_display(S), write(' . '), write(SD), !.
+c_strcons([S|SD]) :- c_display(S), write(' '), c_strcons(SD), !.
+c_display([])    :- write('()'), !.
+c_display(true)  :- write('true'), !.
+c_display(false) :- write('false'), !.
+c_display(S)     :- (atom(S) ; number(S)), write(S), !.
+c_display(S)     :- write('('), c_strcons(S), write(')').
+
+% Utilities for list processing
+c_pair([X1|X], [Y1|Y], [[X1|[Y1]]|R]) :- c_pair(X, Y, R), !.
+c_pair([], [], []).
+c_assq(X, [[X|[R|_]]|_], R) :- !.
+c_assq(X, [_|Y], R) :- c_assq(X, Y, R), !.
+c_assq(_, [], []).
+
+% The evaluator
+%% builtin tokens
+btokens('\''). btokens('?'). btokens(':').
+btokens('+').  btokens('-'). btokens('*'). btokens('%').
+btokens('=').  btokens('<').
+btokens('$').  btokens('['). btokens(']').
+%% lookup numbers
+c_eval(E, _, R) :- atom(E), char_type(E, digit), atom_number(E, R), !.
+%% lookup builtin tokens
+c_eval(E, _, E) :- atom(E), btokens(E), !.
+%% lookup local names
+c_eval(E, A, R) :- atom(E), c_assq(E, A, R), !.
+% quote
+c_eval(['\'',E], _, E) :- !.
+% if
+c_eval(['?'|[C,T,F]], A, R) :-
+  c_eval(C, A, true), c_eval(T, A, R) ; c_eval(F, A, R), !.
+% lambda
+c_eval([':'|C], A, [V,B,A]) :- reverse(C, [B|C1]), reverse(C1, V), !.
+% eval for builtin functions
+c_eval([F1|V1], A, R) :-
+  c_eval(F1, A, F), atom(F), c_evals(V1, A, V), c_apply(F, V, R), !.
+% eval for lambda as an optimization of tail calls
+c_eval([F1|V1], A, R) :-
+  c_eval(F1, A, [LV,LB,LA]), c_evals(V1, A, V),
+  c_pair(LV, V, RA1), append(RA1, LA, RA), c_eval(LB, RA, R), !.
+% map c_eval for values
+c_evals([V|V1], A, [R|VS]) :- c_eval(V, A, R), c_evals(V1, A, VS), !.
+c_evals([], _, []).
+% apply for builtin functions
+c_apply('+', [V1,V2], R) :- R is V1 + V2.
+c_apply('-', [V1,V2], R) :- R is V1 - V2.
+c_apply('*', [V1,V2], R) :- R is V1 * V2.
+c_apply('%', [V1,V2], R) :- R is V1 mod V2.
+c_apply('=', [V,V], R) :- R = true ; R = false.
+c_apply('<', [V1,V2], R) :- V1 < V2, R = true ; R = false.
+c_apply('$', [V1,V2], [V1|V2]).
+c_apply('[', [[V|_]|_], V).
+c_apply(']', [[_|V]|_], V).
+
+c_rep(S) :- c_read(S, R1), c_eval(R1, [], R), c_display(R).
+
+% Examples:
+% c_rep("('(Hello!!))"). => (H e l l o ! !)
+% c_rep("((:nr($nr))12)"). => (1 . 2)
+% c_rep("((:n(?(=(%n3)0)('Y)('N)))6)"). => Y
+% c_rep("((:x($([(]x))($([x)(](]x)))))('(abc)))"). => (b a c)
+ 
