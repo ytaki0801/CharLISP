@@ -1,6 +1,6 @@
 * For input
 
-(((:g(gg))(:t(:abc(?(<ba)((tt)((tt)(-a1)bc)((tt)(-b1)ca)((tt)(-c1)ab))b))))(*25)40)
+(((:g(gg))(:t(:abc((<ba)(:((tt)((tt)(-a1)bc)((tt)(-b1)ca)((tt)(-c1)ab)))(:b)))))(*25)40)
 
 * Equivalent in Scheme
 

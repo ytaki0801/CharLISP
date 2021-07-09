@@ -1,6 +1,6 @@
 * For input
 
-(((:g(gg))(:g(:nr(?(=n0)r((gg)(-n1)(*rn))))))51)
+(((:g(gg))(:g(:nr((=n0)(:r)(:((gg)(-n1)(*rn)))))))51)
 
 * Equivalent in Scheme
 

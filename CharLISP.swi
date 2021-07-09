@@ -33,41 +33,34 @@ c_assq(X, [_|Y], R) :- c_assq(X, Y, R), !.
 c_assq(_, [], []).
 
 % The evaluator
-%% builtin tokens
 btokens('\''). btokens('?'). btokens(':').
 btokens('+').  btokens('-'). btokens('*'). btokens('%').
 btokens('=').  btokens('<').
 btokens('$').  btokens('['). btokens(']').
-%% lookup numbers
 c_eval(E, _, R) :- atom(E), char_type(E, digit), atom_number(E, R), !.
-%% lookup builtin tokens
 c_eval(E, _, E) :- atom(E), btokens(E), !.
-%% lookup local names
 c_eval(E, A, R) :- atom(E), c_assq(E, A, R), !.
-% quote
 c_eval(['\'',E], _, E) :- !.
-% if
 c_eval(['?'|[C,T,F]], A, R) :-
   c_eval(C, A, true), c_eval(T, A, R) ; c_eval(F, A, R), !.
-% lambda
 c_eval([':'|C], A, [V,B,A]) :- reverse(C, [B|C1]), reverse(C1, V), !.
-% eval for builtin functions
 c_eval([F1|V1], A, R) :-
   c_eval(F1, A, F), atom(F), c_evals(V1, A, V), c_apply(F, V, R), !.
-% eval for lambda as an optimization of tail calls
 c_eval([F1|V1], A, R) :-
   c_eval(F1, A, [LV,LB,LA]), c_evals(V1, A, V),
   c_pair(LV, V, RA1), append(RA1, LA, RA), c_eval(LB, RA, R), !.
-% map c_eval for values
 c_evals([V|V1], A, [R|VS]) :- c_eval(V, A, R), c_evals(V1, A, VS), !.
 c_evals([], _, []).
-% apply for builtin functions
 c_apply('+', [V1,V2], R) :- R is V1 + V2.
 c_apply('-', [V1,V2], R) :- R is V1 - V2.
 c_apply('*', [V1,V2], R) :- R is V1 * V2.
 c_apply('%', [V1,V2], R) :- R is V1 mod V2.
-c_apply('=', [V,V], R) :- R = true ; R = false.
-c_apply('<', [V1,V2], R) :- V1 < V2, R = true ; R = false.
+%c_apply('=', [V,V], R) :- R = true ; R = false.
+%c_apply('<', [V1,V2], R) :- V1 < V2, R = true ; R = false.
+c_apply('=', [V,V], [['a','b'],['a'],[]]) :- !.
+c_apply('=', [_,_], [['a','b'],['b'],[]]).
+c_apply('<', [V1,V2], [['a','b'],['a'],[]]) :- V1 < V2, !.
+c_apply('<', [_,_],   [['a','b'],['b'],[]]).
 c_apply('$', [V1,V2], [V1|V2]).
 c_apply('[', [[V|_]|_], V).
 c_apply(']', [[_|V]|_], V).
@@ -77,6 +70,6 @@ c_rep(S) :- c_read(S, R1), c_eval(R1, [], R), c_display(R).
 % Examples:
 % c_rep("('(Hello!!))"). => (H e l l o ! !)
 % c_rep("((:nr($nr))12)"). => (1 . 2)
-% c_rep("((:n(?(=(%n3)0)('Y)('N)))6)"). => Y
+% c_rep("((:n((=(%n3)0)(:('Y))(:('N))))6)"). => Y
 % c_rep("((:x($([(]x))($([x)(](]x)))))('(abc)))"). => (b a c)
  

@@ -1,6 +1,6 @@
 * For input
 
-(((:g(gg))(:g(:nr(?(<n0)r((gg)(-n1)($(((:g(gg))(:g(:nab(?(=n0)a((gg)(-n1)b(+ab))))))n01)r))))))(*37)('()))
+(((:g(gg))(:g(:nr((<n0)(:r)(:((gg)(-n1)($(((:g(gg))(:g(:nab((=n0)(:a)(:((gg)(-n1)b(+ab)))))))n01)r)))))))(*37)('()))
 
 * Equivalent in Scheme
 

@@ -33,9 +33,6 @@
   (if (pair? e)
       (let ((p (car e)) (c (cdr e)))
 	(cond ((eq? p #\') (car c))
-	      ((eq? p #\?)
-	       (if (ceval (car c) a)
-		   (ceval (cadr c) a) (ceval (caddr c) a)))
 	      ((eq? p #\:)
 	       (let* ((r (reverse c)) (b (car r)) (v (reverse (cdr r))))
 		 (list v b a)))
@@ -48,13 +45,16 @@
       (cond ((or (number? e) (member e BTOKENS)) e)
 	    (else (cdr (assq e a))))))
 
+(define T '((a b) (a) ()))
+(define F '((a b) (b) ()))
+
 (define (capply f v)
   (cond ((eq? f #\+) (+ (car v) (cadr v)))
 	((eq? f #\-) (- (car v) (cadr v)))
 	((eq? f #\*) (* (car v) (cadr v)))
 	((eq? f #\%) (modulo (car v) (cadr v)))
-	((eq? f #\=) (eq? (car v) (cadr v)))
-	((eq? f #\<) (<   (car v) (cadr v)))
+	((eq? f #\=) (if (eq? (car v) (cadr v)) T F))
+	((eq? f #\<) (if (<   (car v) (cadr v)) T F))
 	((eq? f #\$) (cons (car v) (cadr v)))
 	((eq? f #\[) (car (car v)))
 	((eq? f #\]) (cdr (car v)))))
@@ -70,6 +70,6 @@
 Examples:
 "('(Hello!!))" => (H e l l o ! !)
 "((:nr($nr))12)" => (1 . 2)
-"((:n(?(=(%n3)0)('Y)('N)))6)" => Y
+"((:n((=(%n3)0)(:('Y))(:('N))))6)" => Y
 "((:x($([(]x))($([x)(](]x)))))('(abc)))" => (b a c)
 |#
