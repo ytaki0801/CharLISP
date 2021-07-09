@@ -17,7 +17,6 @@ See comments in source codes and examples directory for other examples.
 => (2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97)
 
 (((:g(gg))(:g(:nr((=n0)(:r)(:((=(%n(*35))0)(:((gg)(-n1)($('(FizzBuzz))r)))(:((=(%n3)0)(:((gg)(-n1)($('(Fizz))r)))(:((=(%n5)0)(:((gg)(-n1)($('(Buzz))r)))(:((gg)(-n1)($nr)))))))))))))(*56)('()))
-
 => (1 2 (F i z z) 4 (B u z z) (F i z z) 7 8 (F i z z) (B u z z) 11 (F i z z) 13 14 (F i z z B u z z) 16 17 (F i z z) 19 (B u z z) (F i z z) 22 23 (F i z z) (B u z z) 26 (F i z z) 28 29 (F i z z B u z z))
 ```
 
