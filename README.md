@@ -28,7 +28,7 @@ See comments in source codes and examples directory for other examples.
 
 |Codes|Description|Equivalent in Scheme|
 |:---:|:---|:---:|
-|`(:abcB)`, `(:B)`|*lambda* syntax with lexical scope|`(lambda (a b c) B)`, (lambda () B)`|
+|`(:abcB)`, `(:B)`|*lambda* syntax with lexical scope|`(lambda (a b c) B)`, `(lambda () B)`|
 |`('A)`|*quote* syntax as an abbreviation|`(quote A)`|
 
 * Builtin functions
