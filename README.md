@@ -30,12 +30,11 @@ See comments in source codes and examples directory for other examples.
 |Codes|Description|Equivalent in Scheme|
 |:---:|:---|:---:|
 |`(:abcB)`|*lambda* syntax with lexical scope|`(lambda (a b c) B)`|
-|`(?CTF)`|*if* syntax|`(if C T F)`|
 |`('A)`|*quote* syntax as an abbreviation|`(quote A)`|
 
-* Predicate functions: `=` `<` (return Church Booleans so *lambda* closures are needed for clauses)
-
-* Builtin functions: `+` `-` `*` `%`(`modulo`) `$`(`cons`) `[`(`car`) `]`(`cdr`)
+* Builtin functions
+	* Predicates: `=` `<` (return Church Booleans so *lambda* closures are needed for clauses)
+	* Others: `+` `-` `*` `%`(`modulo`) `$`(`cons`) `[`(`car`) `]`(`cdr`)
 
 * Data types: one-character symbols and integers only, except default type of integer as return values
 
