@@ -41,8 +41,6 @@ c_eval(E, _, R) :- atom(E), char_type(E, digit), atom_number(E, R), !.
 c_eval(E, _, E) :- atom(E), btokens(E), !.
 c_eval(E, A, R) :- atom(E), c_assq(E, A, R), !.
 c_eval(['\'',E], _, E) :- !.
-c_eval(['?'|[C,T,F]], A, R) :-
-  c_eval(C, A, true), c_eval(T, A, R) ; c_eval(F, A, R), !.
 c_eval([':'|C], A, [V,B,A]) :- reverse(C, [B|C1]), reverse(C1, V), !.
 c_eval([F1|V1], A, R) :-
   c_eval(F1, A, F), atom(F), c_evals(V1, A, V), c_apply(F, V, R), !.
@@ -55,8 +53,6 @@ c_apply('+', [V1,V2], R) :- R is V1 + V2.
 c_apply('-', [V1,V2], R) :- R is V1 - V2.
 c_apply('*', [V1,V2], R) :- R is V1 * V2.
 c_apply('%', [V1,V2], R) :- R is V1 mod V2.
-%c_apply('=', [V,V], R) :- R = true ; R = false.
-%c_apply('<', [V1,V2], R) :- V1 < V2, R = true ; R = false.
 c_apply('=', [V,V], [['a','b'],['a'],[]]) :- !.
 c_apply('=', [_,_], [['a','b'],['b'],[]]).
 c_apply('<', [V1,V2], [['a','b'],['a'],[]]) :- V1 < V2, !.

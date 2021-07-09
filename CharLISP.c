@@ -236,7 +236,6 @@ node_t c_apply(node_t f, node_t v)
 }
  
 #define C_QUOTE  (chr_to_node('\''))
-#define C_IF     (chr_to_node('?'))
 #define C_LAMBDA (chr_to_node(':'))
 
 node_t c_evals(node_t v, node_t a)
@@ -252,11 +251,6 @@ node_t c_eval(node_t e, node_t a)
     else if (eq(car(e), C_QUOTE)) {
       node_t vals = cadr(e);
       return vals;
-    } else if (eq(car(e), C_IF)) {
-      if (node_to_num(c_eval(cadr(e), a)))
-        return c_eval(caddr(e), a);
-      else
-        return c_eval(cadddr(e), a);
     } else if (eq(car(e), C_LAMBDA)) {
       node_t r = c_reverse(cdr(e));
       node_t body = car(r);

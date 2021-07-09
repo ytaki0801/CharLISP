@@ -5,7 +5,7 @@
 ;;;; https://creativecommons.org/publicdomain/zero/1.0/
 ;;;;
 
-(define BTOKENS `(,#\( ,#\) ,#\. ,#\' ,#\? ,#\:
+(define BTOKENS `(,#\( ,#\) ,#\. ,#\' ,#\:
 		  ,#\+ ,#\- ,#\* ,#\% ,#\= ,#\< ,#\$ ,#\[ ,#\]))
 
 (define (csyn1 s r)
